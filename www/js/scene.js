@@ -59,13 +59,14 @@ light1.position.set(0,0,0);
 
 //Luz ambiental suave
 var light2 = new THREE.AmbientLight( 0x404040 ); 
-light1.position.set(0,0,0);
+light2.position.set(0,0,0);
 
 //Añadir luces a la escena
 scene.add(light1);
 scene.add(light2);
 
-
+//Orbit controls
+let controls = new THREE.OrbitControls(camara, lienzo.domElement);
 
 function renderizar(){
 	//Rotar cubo eje y
