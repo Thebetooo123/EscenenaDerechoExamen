@@ -13,24 +13,34 @@ lienzo.setClearColor (0xD0F4C7, 1);
 document.body.appendChild(lienzo.domElement);
 
 var scene = new THREE.Scene;
+//color
+//Color aleatorio
+function generarcolor() {
+	long = 6;
+	var caracteres = "0123456789ABCDEF";
+	var color = "";
+	for (i = 0; i < long; i++) color += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+	color = "#" + color;
+	return color;
+}
 
 //Cubo
 var geometryCube = new THREE.CubeGeometry(30,30,30);
-var material = new THREE.MeshLambertMaterial({color: 0x9999FF});
+var material = new THREE.MeshLambertMaterial({color: generarcolor()});
 var cube = new THREE.Mesh(geometryCube, material);
 scene.add(cube);
 cube.position.set(90,0,0);
 
 //Toroide
 var geometryTorus = new THREE.TorusGeometry( 14, 4, 30, 200 );
-var material = new THREE.MeshLambertMaterial({color: 0x9999FF});
+var material = new THREE.MeshLambertMaterial({color: generarcolor()});
 var torus = new THREE.Mesh( geometryTorus, material );
 scene.add( torus );
 torus.position.set(-50,0,0);
 
 //Pirámide
 var geometryCone = new THREE.ConeGeometry( 20, 30, 4, 64 );
-var material = new THREE.MeshLambertMaterial({color: 0x9999FF});
+var material = new THREE.MeshLambertMaterial({color:generarcolor()});
 var cone = new THREE.Mesh( geometryCone, material );
 scene.add(cone);
 cone.position.set(15,0,0);
