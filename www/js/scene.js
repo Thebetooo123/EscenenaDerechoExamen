@@ -1,6 +1,6 @@
 //Obtener ancho y alto de la ventana
-WIDTH = window.innerWidth;
-HEIGHT = window.innerHeight;
+var WIDTH = window.innerWidth;
+var HEIGHT = window.innerHeight;
 
 var lienzo = new THREE.WebGLRenderer({antialias: true});
 
