@@ -37,19 +37,26 @@ else if(e) keyCode = e.which;
 var geometryCube = new THREE.CubeGeometry(30,30,30);
 var materialC = new THREE.MeshLambertMaterial({color: generarcolor()});
 var cube = new THREE.Mesh(geometryCube, materialC);
-cube.position.set(90,0,0);
+cube.position.set(75,0,0);
 
 //Toroide
 var geometryTorus = new THREE.TorusGeometry( 14, 4, 30, 200 );
 var materialT = new THREE.MeshLambertMaterial({color: generarcolor()});
 var torus = new THREE.Mesh(geometryTorus, materialT);
-torus.position.set(-50,0,0);
+torus.position.set(-65,0,0);
 
 //Pirámide
 var geometryCone = new THREE.ConeGeometry( 20, 30, 4, 64 );
 var materialP = new THREE.MeshLambertMaterial({color:generarcolor()});
 var cone = new THREE.Mesh(geometryCone, materialP);
-cone.position.set(15,0,0);
+cone.position.set(0,0,0);
+
+//Cuadro de fondo
+var geometryScuare = new THREE.CubeGeometry(300, 200, 0);
+var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
+var Scuare = new THREE.Mesh(geometryScuare, material);
+Scuare.position.set(0, 0, -50);
+scene.add(Scuare);
 
 //cargar texturas de primitivas y detector de tecla
 var CubeTexture = new THREE.ImageUtils.loadTexture("public/Cube/img.jpg");
@@ -57,9 +64,9 @@ var TorusTexture = new THREE.ImageUtils.loadTexture("public/Donnut/img.jpg");
 var ConeTexture = new THREE.ImageUtils.loadTexture("public/Pyramid/img.jpg");
 var KeyDetector = tecla();
 if(KeyDetector){
-	materialC = new THREE.MeshLambertMaterial({map: CubeTexture});
-	materialT = new THREE.MeshLambertMaterial({map: TorusTexture});
-	materialP = new THREE.MeshLambertMaterial({map: ConeTexture});
+	materialC = new THREE.MeshBasicMaterial({map: CubeTexture});
+	materialT = new THREE.MeshBasicMaterial({map: TorusTexture});
+	materialP = new THREE.MeshBasicMaterial({map: ConeTexture});
 }
 
 // Generar cámara
