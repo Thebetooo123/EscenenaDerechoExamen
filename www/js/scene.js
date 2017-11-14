@@ -1,6 +1,6 @@
 //Obtener ancho y alto de la ventana
-var WIDTH = window.innerWidth;
-var HEIGHT = window.innerHeight;
+var WIDTH = window.innerWidth - 5;
+var HEIGHT = window.innerHeight - 10;
 
 var lienzo = new THREE.WebGLRenderer({antialias: true});
 
@@ -24,26 +24,43 @@ function generarcolor() {
 	return color;
 }
 
+//Detectar la tecla presionada
+var keyCode;
+function tecla(e){
+if(window.event)keyCode = window.event.keyCode;
+else if(e) keyCode = e.which;
+//alert(keyCode);
+}
+
+
 //Cubo
 var geometryCube = new THREE.CubeGeometry(30,30,30);
-var material = new THREE.MeshLambertMaterial({color: generarcolor()});
-var cube = new THREE.Mesh(geometryCube, material);
-scene.add(cube);
+var materialC = new THREE.MeshLambertMaterial({color: generarcolor()});
+var cube = new THREE.Mesh(geometryCube, materialC);
 cube.position.set(90,0,0);
 
 //Toroide
 var geometryTorus = new THREE.TorusGeometry( 14, 4, 30, 200 );
-var material = new THREE.MeshLambertMaterial({color: generarcolor()});
-var torus = new THREE.Mesh( geometryTorus, material );
-scene.add( torus );
+var materialT = new THREE.MeshLambertMaterial({color: generarcolor()});
+var torus = new THREE.Mesh(geometryTorus, materialT);
 torus.position.set(-50,0,0);
 
 //Pirámide
 var geometryCone = new THREE.ConeGeometry( 20, 30, 4, 64 );
-var material = new THREE.MeshLambertMaterial({color:generarcolor()});
-var cone = new THREE.Mesh( geometryCone, material );
-scene.add(cone);
+var materialP = new THREE.MeshLambertMaterial({color:generarcolor()});
+var cone = new THREE.Mesh(geometryCone, materialP);
 cone.position.set(15,0,0);
+
+//cargar texturas de primitivas y detector de tecla
+var CubeTexture = new THREE.ImageUtils.loadTexture("public/Cube/img.jpg");
+var TorusTexture = new THREE.ImageUtils.loadTexture("public/Donnut/img.jpg");
+var ConeTexture = new THREE.ImageUtils.loadTexture("public/Pyramid/img.jpg");
+var KeyDetector = tecla();
+if(KeyDetector){
+	materialC = new THREE.MeshLambertMaterial({map: CubeTexture});
+	materialT = new THREE.MeshLambertMaterial({map: TorusTexture});
+	materialP = new THREE.MeshLambertMaterial({map: ConeTexture});
+}
 
 // Generar cámara
 var camara = new THREE.PerspectiveCamera(
@@ -91,6 +108,12 @@ function renderizar(){
 	lienzo.render(scene, camara);
 	requestAnimationFrame(renderizar);
 }
+//Agregar a la escena el cubo
+scene.add(cube);
+//Agregar a la escena el toroide
+scene.add( torus );
+//Agregar a la escena la piramide
+scene.add(cone);
 //Llamar a la función
 renderizar();
 
