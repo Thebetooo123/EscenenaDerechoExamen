@@ -1,3 +1,4 @@
+(function(){
 //Obtener ancho y alto de la ventana
 var WIDTH = window.innerWidth - 5;
 var HEIGHT = window.innerHeight - 10;
@@ -11,7 +12,15 @@ lienzo.setSize(WIDTH,HEIGHT);
 lienzo.setClearColor (0xD0F4C7, 1);
 // Añadir lienzo a la página
 document.body.appendChild(lienzo.domElement);
-
+lienzo.shadowMap.enabled = true; //permite mapear ada una primitiva //
+lienzo.shadowMap.soft = true; //suave la sombre osea apariencia //
+lienzo.shadowMap.type = THREE.PCFShadowMap;
+//sombra aqui sombra alla :)//
+let planeGeometry = new THREE.PlaneGeometry(200,900);
+planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
+let groundMaterial = new THREE.MeshPhongMaterial({
+	color: 0xffffff
+});
 var scene = new THREE.Scene;
 //color
 //Color aleatorio
@@ -38,25 +47,23 @@ var geometryCube = new THREE.CubeGeometry(30,30,30);
 var materialC = new THREE.MeshLambertMaterial({color: generarcolor()});
 var cube = new THREE.Mesh(geometryCube, materialC);
 cube.position.set(75,0,0);
-
+cube.receiveShadow = true;
+cube.castShadow = true;
 //Toroide
 var geometryTorus = new THREE.TorusGeometry( 14, 4, 30, 200 );
 var materialT = new THREE.MeshLambertMaterial({color: generarcolor()});
 var torus = new THREE.Mesh(geometryTorus, materialT);
 torus.position.set(-65,0,0);
-
+torus.receiveShadow = true;
+torus.castShadow = true;
 //Pirámide
 var geometryCone = new THREE.ConeGeometry( 20, 30, 4, 64 );
 var materialP = new THREE.MeshLambertMaterial({color:generarcolor()});
 var cone = new THREE.Mesh(geometryCone, materialP);
 cone.position.set(0,0,0);
+cone.receiveShadow = true;
+cone.castShadow = true;
 
-//Cuadro de fondo
-var geometryScuare = new THREE.CubeGeometry(300, 200, 0);
-var material = new THREE.MeshLambertMaterial({color: 0xFFFFFF});
-var Scuare = new THREE.Mesh(geometryScuare, material);
-Scuare.position.set(0, 0, -50);
-scene.add(Scuare);
 
 //cargar texturas de primitivas y detector de tecla
 var CubeTexture = new THREE.ImageUtils.loadTexture("public/Cube/img.jpg");
@@ -93,11 +100,38 @@ light1.position.set(0,0,0);
 
 //Luz ambiental suave
 var light2 = new THREE.AmbientLight( 0x404040 ); 
-light2.position.set(0,0,0);
+light2.position.set(0,0,10);
 
 //Añadir luces a la escena
 scene.add(light1);
 scene.add(light2);
+let pointLight = new THREE.PointLight(0x606060);
+
+	pointLight.position.y = 50;
+	pointLight.position.z = 50;
+
+	pointLight.castShadow = true;//la luz proyctea la sombra//
+
+	scene.background = new THREE.Color(0xeeeeee);
+	scene.add(new THREE.AmbientLight(0x404040));
+	scene.add(plane);
+	scene.add(pointLight);
+
+	
+
+//plano para que se muestren las sombras de las primitivas.
+var GeometryPlane = new THREE.PlaneGeometry(450,470);
+let ggroundMaterial = new THREE.MeshPhongMaterial({color: 0x123456});//no esta bonito el color
+var plane = new THREE.Mesh(GeometryPlane, ggroundMaterial);
+plane.receiveShadow = true;
+plane.position.z = -50;
+plane.position.y = 0;
+scene.add(plane);
+
+//Cube.castShadow = true;
+//torus.castShadow = true;
+//cone.castShadow = true;
+
 
 //Orbit controls
 let controls = new THREE.OrbitControls(camara, lienzo.domElement);
@@ -122,5 +156,4 @@ scene.add( torus );
 //Agregar a la escena la piramide
 scene.add(cone);
 //Llamar a la función
-renderizar();
-
+renderizar();})();
