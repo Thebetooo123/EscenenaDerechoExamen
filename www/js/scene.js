@@ -13,13 +13,9 @@ lienzo.shadowMap.enabled = true; //permite mapear ada una primitiva //
 lienzo.shadowMap.soft = true; //suave la sombre osea apariencia //
 lienzo.shadowMap.type = THREE.PCFShadowMap;
 //sombra aqui sombra alla :)//
-let planeGeometry = new THREE.PlaneGeometry(200,900);
-planeGeometry.applyMatrix(new THREE.Matrix4().makeRotationX(-Math.PI/2));
-let groundMaterial = new THREE.MeshPhongMaterial({
-	color: 0xffffff
-});
+
 var scene = new THREE.Scene;
-//color
+
 //Color aleatorio
 function generarcolor() {
 	long = 6;
@@ -103,7 +99,7 @@ light1.castShadow = true;
 
 scene.background = new THREE.Color(0xD0F4C7);
 
-//Luz ambiental suave
+//Luz ambiental
 var light2 = new THREE.AmbientLight( 0x404040 ); 
 light2.position.set(0,0,10);
 
